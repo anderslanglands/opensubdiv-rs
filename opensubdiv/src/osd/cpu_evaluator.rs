@@ -4,20 +4,39 @@ use crate::far::StencilTable;
 
 use opensubdiv_sys as sys;
 
-// FIXME: this is unsafe because we're mutating dst_buffer but pretending
-// we're not
-pub unsafe fn eval_stencils(
+use super::Error;
+type Result<T, E = Error> = std::result::Result<T, E>;
+
+/// Generic static eval stencils function.
+///
+/// This function has a same signature as other device kernels have so that it
+/// can be called in the same way from OsdMesh template interface.
+///
+/// * `srcBuffer` - Input primvar buffer. Must have BindCpuBuffer() method
+/// returning a const float pointer for read
+/// * `srcDesc` - vertex buffer descriptor for the input buffer
+/// * `dstBuffer` -  Output primvar buffer must have BindCpuBuffer() method
+/// returning a float pointer for write
+/// * `dstDesc` - vertex buffer descriptor for the output buffer
+/// * `stencilTable` - [StencilTable] or equivalent
+pub fn eval_stencils(
     src_buffer: &CpuVertexBuffer,
     src_desc: BufferDescriptor,
-    dst_buffer: &CpuVertexBuffer,
+    dst_buffer: &mut CpuVertexBuffer,
     dst_desc: BufferDescriptor,
     stencil_table: &StencilTable,
-) -> bool {
-    sys::osd::CpuEvaluator_EvalStencils(
-        src_buffer.ptr,
-        src_desc,
-        dst_buffer.ptr,
-        dst_desc,
-        stencil_table.ptr,
-    )
+) -> Result<()> {
+    unsafe {
+        if sys::osd::CpuEvaluator_EvalStencils(
+            src_buffer.ptr,
+            src_desc,
+            dst_buffer.ptr,
+            dst_desc,
+            stencil_table.ptr,
+        ) {
+            Ok(())
+        } else {
+            Err(Error::EvalStencilsFailed)
+        }
+    }
 }

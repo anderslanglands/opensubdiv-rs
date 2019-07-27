@@ -1,5 +1,13 @@
 use opensubdiv_sys as sys;
 
+/// A simple reference to raw topology data for use with TopologyRefinerFactory
+///
+/// TopologyDescriptor is a simple struct containing references to raw topology
+/// data used to construct a TopologyRefiner.  It is not a requirement but a
+/// convenience for use with TopologyRefinerFactory when mesh topology is not
+/// available in an existing mesh data structure.  It should be functionally
+/// complete and simple to use, but for more demanding situations, writing a
+/// custom Factory is usually warranted.
 pub struct TopologyDescriptor<'a> {
     num_vertices: i32,
     num_faces: i32,
@@ -17,6 +25,15 @@ pub struct TopologyDescriptor<'a> {
 }
 
 impl<'a> TopologyDescriptor<'a> {
+    /// Create a new [TopologyDescriptor]
+    ///
+    /// ## Parameters
+    /// * `num_vertices` - The number of vertices in the mesh.
+    /// * `num_faces` - The number of faces in the mesh.
+    /// * `num_verts_per_face` - A slice containing the number of vertices for
+    /// each face in the mesh.
+    /// * `vert_indices_per_face` - A flat list of the vertex indices for each
+    /// face in the mesh.
     pub fn new(
         num_vertices: i32,
         num_faces: i32,

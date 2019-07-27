@@ -9,7 +9,11 @@ typedef OpenSubdiv::Vtr::Index Index;
 
 extern "C" {
 
-    /// \brief Returns the number of stencils in the table
+    void StencilTable_destroy(StencilTable* st) {
+        delete st;
+    }
+
+    /// Returns the number of stencils in the table
     int StencilTable_GetNumStencils(StencilTable* st) {
         return st->GetNumStencils();
     }

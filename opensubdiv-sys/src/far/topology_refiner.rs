@@ -83,27 +83,39 @@ extern "C" {
         options: UniformOptions,
     );
     pub fn TopologyRefiner_destroy(refiner: TopologyRefinerPtr);
+    /// \brief Returns the subdivision scheme
     pub fn TopologyRefiner_GetSchemeType(
         refiner: TopologyRefinerPtr,
     ) -> sdc::SchemeType;
+    /// \brief Returns the subdivision options
     pub fn TopologyRefiner_GetSchemeOptions(
         refiner: TopologyRefinerPtr,
     ) -> sdc::Options;
+    /// \brief Returns true if uniform refinement has been applied
     pub fn TopologyRefiner_IsUniform(refiner: TopologyRefinerPtr) -> bool;
+    /// \brief Returns the number of refinement levels
     pub fn TopologyRefiner_GetNumLevels(refiner: TopologyRefinerPtr) -> i32;
+    /// \brief Returns the highest level of refinement
     pub fn TopologyRefiner_GetMaxLevel(refiner: TopologyRefinerPtr) -> i32;
+    /// \brief Returns the maximum vertex valence in all levels
     pub fn TopologyRefiner_GetMaxValence(refiner: TopologyRefinerPtr) -> i32;
+    /// \brief Returns true if faces have been tagged as holes
     pub fn TopologyRefiner_HasHoles(refiner: TopologyRefinerPtr) -> bool;
+    /// \brief Returns the total number of vertices in all levels
     pub fn TopologyRefiner_GetNumVerticesTotal(
         refiner: TopologyRefinerPtr,
     ) -> i32;
+    /// \brief Returns the total number of edges in all levels
     pub fn TopologyRefiner_GetNumEdgesTotal(refiner: TopologyRefinerPtr)
         -> i32;
+    /// \brief Returns the total number of faces in all levels
     pub fn TopologyRefiner_GetNumFacesTotal(refiner: TopologyRefinerPtr)
         -> i32;
+    /// \brief Returns the total number of face vertices in all levels
     pub fn TopologyRefiner_GetNumFaceVerticesTotal(
         refiner: TopologyRefinerPtr,
     ) -> i32;
+    /// \brief Returns a handle to access data specific to a particular level
     pub fn TopologyRefiner_GetLevel(
         refiner: TopologyRefinerPtr,
         level: i32,
