@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_library(osd-capi STATIC 
+    far/primvar_refiner.cpp
     far/stencil_table.cpp
     far/stencil_table_factory.cpp
     far/topology_refiner_factory.cpp
@@ -12,6 +13,8 @@ add_library(osd-capi STATIC
     far/topology_level.cpp
     osd/cpu_vertex_buffer.cpp
     osd/cpu_evaluator.cpp
+    osd/cuda_evaluator.cpp
+    osd/cuda_vertex_buffer.cpp
 )
 
 target_include_directories(osd-capi PUBLIC ${INC_OSD})

@@ -2,7 +2,7 @@ use super::topology_descriptor::TopologyDescriptor;
 use super::topology_refiner::TopologyRefiner;
 pub use sys::far::topology_refiner_factory::Options;
 
-use super::Error;
+use crate::Error;
 type Result<T, E = Error> = std::result::Result<T, E>;
 
 use opensubdiv_sys as sys;

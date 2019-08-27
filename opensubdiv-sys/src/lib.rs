@@ -1,6 +1,9 @@
 #[macro_use]
 extern crate bitfield;
 
+#[macro_use]
+extern crate derive_more;
+
 #[link(name = "osl-capi", kind = "static")]
 pub mod far;
 pub use far::*;
@@ -15,12 +18,8 @@ pub mod vtr;
 #[test]
 fn it_works() {
     let vertices = [
-        -0.5, -0.5, 0.5, 0.5, 
-        -0.5, 0.5, -0.5, 0.5, 
-        0.5, 0.5, 0.5, 0.5, 
-        -0.5, 0.5, -0.5, 0.5, 
-        0.5, -0.5, -0.5, -0.5, 
-        -0.5, 0.5, -0.5, -0.5,
+        -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5,
+        0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5,
     ];
     let num_vertices = 8;
     let num_faces = 6;
@@ -50,10 +49,7 @@ fn it_works() {
     let refiner = unsafe {
         TopologyRefinerFactory_TopologyDescriptor_Create(
             &descriptor as *const TopologyDescriptor,
-            far::topology_refiner_factory::Options::new(
-                scheme_type,
-                options,
-            ),
+            far::topology_refiner_factory::Options::new(scheme_type, options),
         )
     };
 

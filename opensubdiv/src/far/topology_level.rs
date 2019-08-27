@@ -49,6 +49,14 @@ impl<'a> TopologyLevel<'a> {
     pub fn get_num_face_vertices(&self) -> i32 {
         unsafe { sys::far::TopologyLevel_GetNumFaceVertices(self.ptr) }
     }
+
+    pub fn face_vertices_iter(&self) -> FaceVerticesIterator {
+        FaceVerticesIterator {
+            level: self,
+            current: 0,
+            num: self.get_num_face_vertices(),
+        }
+    }
 }
 
 /// ### Methods to inspect topological relationships for individual components:
@@ -71,7 +79,7 @@ impl<'a> TopologyLevel<'a> {
     pub fn get_face_vertices(&self, f: Index) -> Option<&[Index]> {
         unsafe {
             let arr = sys::far::TopologyLevel_GetFaceVertices(self.ptr, f);
-            if arr.size() == 0 || arr.begin().is_null() {
+            if f < Index(0) || arr.size() == 0 || arr.begin().is_null() || f >= Index(self.get_num_faces()) {
                 None
             } else {
                 Some(std::slice::from_raw_parts(
@@ -222,6 +230,26 @@ impl<'a> TopologyLevel<'a> {
         } else {
             Some(i)
         }
+    }
+}
+
+pub struct FaceVerticesIterator<'a> {
+    level: &'a TopologyLevel<'a>,
+    num: i32,
+    current: i32,
+}
+
+impl<'a> Iterator for FaceVerticesIterator<'a> {
+    type Item = &'a [Index];
+    
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.current == self.num {
+            None
+        } else {
+            self.current += 1;
+            self.level.get_face_vertices(Index(self.current - 1))
+        }
+
     }
 }
 

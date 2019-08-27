@@ -2,8 +2,6 @@ use crate::osd::BufferDescriptor;
 use crate::osd::CpuVertexBufferPtr;
 use crate::far::StencilTablePtr;
 
-use std::os::raw::c_void;
-
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct CpuEvaluator_obj {

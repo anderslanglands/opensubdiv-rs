@@ -8,6 +8,7 @@ edition = "2018"
 
 [dependencies]
 bitfield = "0.13.2"
+derive_more = "0.15.0"
 
 [build-dependencies]
 cmake = "0.1"

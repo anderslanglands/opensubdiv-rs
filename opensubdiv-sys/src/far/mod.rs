@@ -15,3 +15,6 @@ pub use stencil_table_factory::*;
 
 pub mod topology_descriptor;
 pub use topology_descriptor::*;
+
+pub mod primvar_refiner;
+pub use primvar_refiner::*;

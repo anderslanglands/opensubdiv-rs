@@ -55,8 +55,5 @@ pub use stencil_table::*;
 pub mod stencil_table_factory;
 pub use stencil_table_factory::*;
 
-#[derive(Display, Debug)]
-pub enum Error {
-    #[display(fmt = "TopologyRefinerFactory failed to create TopologyRefiner")]
-    CreateTopologyRefinerFailed,
-}
+pub mod primvar_refiner;
+pub use primvar_refiner::*;
